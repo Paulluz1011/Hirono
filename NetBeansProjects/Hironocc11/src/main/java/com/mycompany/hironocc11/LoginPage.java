@@ -12,7 +12,7 @@ public class LoginPage extends javax.swing.JPanel {
     private static final String CORRECT_USERNAME = "paul";
     // This is a hashed password for "10111011" using SHA-256
     // In production, use bcrypt or similar
-    private static final String CORRECT_PASSWORD_HASH = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92";
+    private static final String CORRECT_PASSWORD_HASH = "paulluz";
     
     public LoginPage(MainFrame mainFrame) {
                 initComponents();
