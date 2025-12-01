@@ -37,7 +37,7 @@ public class LoadingPage extends javax.swing.JPanel {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1440, 800));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/loading.gif"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/lepetit.gif"))); // NOI18N
         jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

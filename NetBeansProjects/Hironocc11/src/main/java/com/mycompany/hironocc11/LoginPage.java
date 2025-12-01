@@ -1,21 +1,16 @@
 package com.mycompany.hironocc11;
 import javax.swing.*;
 import java.awt.event.*; 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.nio.charset.StandardCharsets;
 
 public class LoginPage extends javax.swing.JPanel {
     private MainFrame mainFrame;
     
     // Hardcoded credentials (temporary - should use database)
     private static final String CORRECT_USERNAME = "paul";
-    // This is a hashed password for "10111011" using SHA-256
-    // In production, use bcrypt or similar
-    private static final String CORRECT_PASSWORD_HASH = "paulluz";
+    private static final String CORRECT_PASSWORD = "10111011";
     
     public LoginPage(MainFrame mainFrame) {
-                initComponents();
+        initComponents();
         this.mainFrame = mainFrame;
         
         // Add Enter key support for password field
@@ -31,23 +26,6 @@ public class LoginPage extends javax.swing.JPanel {
                 pas.requestFocus(); // Move to password field
             }
         });
-    }
-
-    // Hash password using SHA-256 (in production, use bcrypt)
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing password", e);
-        }
     }
 
     // Validate login credentials
@@ -69,11 +47,9 @@ public class LoginPage extends javax.swing.JPanel {
             return false;
         }
         
-        // Hash the entered password and compare
-        String hashedPassword = hashPassword(password);
-        
+        // Direct comparison (not secure, but functional)
         return username.equals(CORRECT_USERNAME) && 
-               hashedPassword.equals(CORRECT_PASSWORD_HASH);
+               password.equals(CORRECT_PASSWORD);
     }
 
     private void logActionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,8 +90,6 @@ public class LoginPage extends javax.swing.JPanel {
         pas.requestFocus();
     }
 
-    // [Keep all your existing initComponents() method and variable declarations here]
-    
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
@@ -252,7 +226,7 @@ public class LoginPage extends javax.swing.JPanel {
             .addComponent(jleft, javax.swing.GroupLayout.PREFERRED_SIZE, 749, Short.MAX_VALUE)
             .addComponent(jright, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
         );
-    }// </editor-fold>                        }
+    }
 
     // Variables declaration - do not modify
     private javax.swing.JLabel jLabel1;
