@@ -152,4 +152,8 @@ public final class MainFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify                     
     // End of variables declaration                   
+
+    void showCheckoutPage(ArrayList<Item> selectedItems) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

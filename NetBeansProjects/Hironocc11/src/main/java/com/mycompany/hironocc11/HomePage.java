@@ -51,22 +51,33 @@ public class HomePage extends JPanel {
         loadItems();
     }
     
-    private void loadItems() {
-        items = mainFrame.getItems();
-
-        for (int i = 0; i < items.size() && i < itemImages.length; i++) {
-            Item item = items.get(i);
-
-            // Set image
-            if (item.getImagePath() != null) {
-                itemImages[i].setIcon(new ImageIcon(item.getImagePath()));
-            }
-
-            // Set name & price
-            itemNames[i].setText(item.getItemName());
-            itemPrices[i].setText("₱" + item.getPrice());
-        }
+   private void loadItems() {
+    items = mainFrame.getItems();
+    
+    if (items == null) {
+        items = new ArrayList<>();
+        return;
     }
+
+    for (int i = 0; i < items.size() && i < itemImages.length; i++) {
+        Item item = items.get(i);
+        
+        if (item == null) continue;
+
+        // Set image
+        if (item.getImagePath() != null && !item.getImagePath().isEmpty()) {
+            try {
+                itemImages[i].setIcon(new ImageIcon(item.getImagePath()));
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + e.getMessage());
+            }
+        }
+
+        // Set name & price
+        itemNames[i].setText(item.getItemName() != null ? item.getItemName() : "");
+        itemPrices[i].setText("₱" + item.getPrice());
+    }
+}
     
     // Get selected items with quantities for checkout
     public ArrayList<Item> getSelectedItems() {
@@ -100,23 +111,13 @@ public class HomePage extends JPanel {
         }
     }
 
-    // Getter methods for spinners
-    public JSpinner getQuanPrince() { return quanprince; }
-    public JSpinner getQuanRose() { return quanrose; }
-    public JSpinner getQuanGeo() { return quangeo; }
-    public JSpinner getQuanTippler() { return quantippler; }
-    public JSpinner getQuanConce() { return quanconce; }
-    public JSpinner getQuanFox() { return quanfox; }
-    public JSpinner getQuanMerch() { return quanmerch; }
-    public JSpinner getQuanKing() { return quanking; }
-    
     public ArrayList<Item> getItems() {
         return items;
     }
 
-    // ===== KEEP ALL YOUR initComponents() CODE BELOW =====
     @SuppressWarnings("unchecked")
     private void initComponents() {
+
         scrollPane1 = new java.awt.ScrollPane();
         hero = new javax.swing.JPanel();
         hero_vid = new javax.swing.JPanel();
@@ -178,12 +179,12 @@ public class HomePage extends JPanel {
         setLayout(new java.awt.BorderLayout());
 
         scrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        scrollPane1.setMixingCutoutShape(null);
 
         hero.setBackground(new java.awt.Color(249, 240, 208));
         hero.setPreferredSize(new java.awt.Dimension(1440, 2500));
 
         hero_vid.setBackground(new java.awt.Color(255, 255, 255));
+        
         hero_vid.setLayout(new java.awt.BorderLayout());
 
         vid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/vidgif.gif")));
@@ -242,11 +243,10 @@ public class HomePage extends JPanel {
 
         itemJ.setBackground(new java.awt.Color(255, 255, 204));
         itemJ.setPreferredSize(new java.awt.Dimension(1440, 1110));
-        itemJ.setRequestFocusEnabled(false);
 
         item_imgpth0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Prince.png")));
-        item_imgpth1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Geo.png")));
-        item_imgpth2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Rose.png")));
+        item_imgpth1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Rose.png")));
+        item_imgpth2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Geo.png")));
         item_imgpth3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Tippler.png")));
         item_imgpth4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Conce.png")));
         item_imgpth5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Fox.png")));
@@ -317,8 +317,66 @@ public class HomePage extends JPanel {
 
         quantippler.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        // [Keeping all your layout code - too long to include but unchanged]
-        // ... (insert all the GroupLayout code for item_details here)
+        javax.swing.GroupLayout item_detailsLayout = new javax.swing.GroupLayout(item_details);
+        item_details.setLayout(item_detailsLayout);
+        item_detailsLayout.setHorizontalGroup(
+            item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(item_detailsLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name0)
+                    .addComponent(item_price0)
+                    .addComponent(textq)
+                    .addComponent(quanprince, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name1)
+                    .addComponent(item_price1)
+                    .addComponent(textq1)
+                    .addComponent(quanrose, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name2)
+                    .addComponent(item_price2)
+                    .addComponent(textq2)
+                    .addComponent(quangeo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name3)
+                    .addComponent(item_price3)
+                    .addComponent(textq3)
+                    .addComponent(quantippler, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        item_detailsLayout.setVerticalGroup(
+            item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(item_detailsLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(item_name0)
+                    .addComponent(item_name1)
+                    .addComponent(item_name2)
+                    .addComponent(item_name3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(item_price0)
+                    .addComponent(item_price1)
+                    .addComponent(item_price2)
+                    .addComponent(item_price3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textq)
+                    .addComponent(textq1)
+                    .addComponent(textq2)
+                    .addComponent(textq3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(item_detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quanprince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quanrose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quangeo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantippler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         item_details2.setBackground(new java.awt.Color(255, 255, 204));
         item_details2.setPreferredSize(new java.awt.Dimension(1440, 150));
@@ -367,46 +425,161 @@ public class HomePage extends JPanel {
 
         quanking.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        // [Keep all remaining layout code]
-        // This code is too long but remains exactly as your original
+        javax.swing.GroupLayout item_details2Layout = new javax.swing.GroupLayout(item_details2);
+        item_details2.setLayout(item_details2Layout);
+        item_details2Layout.setHorizontalGroup(
+            item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(item_details2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name4)
+                    .addComponent(item_price4)
+                    .addComponent(textq4)
+                    .addComponent(quanconce, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name5)
+                    .addComponent(item_price5)
+                    .addComponent(textq5)
+                    .addComponent(quanfox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name6)
+                    .addComponent(item_price6)
+                    .addComponent(textq6)
+                    .addComponent(quanmerch, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(180, 180, 180)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_name7)
+                    .addComponent(item_price7)
+                    .addComponent(textq7)
+                    .addComponent(quanking, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        item_details2Layout.setVerticalGroup(
+            item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(item_details2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(item_name4)
+                    .addComponent(item_name5)
+                    .addComponent(item_name6)
+                    .addComponent(item_name7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(item_price4)
+                    .addComponent(item_price5)
+                    .addComponent(item_price6)
+                    .addComponent(item_price7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textq4)
+                    .addComponent(textq5)
+                    .addComponent(textq6)
+                    .addComponent(textq7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(item_details2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quanconce, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quanfox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quanmerch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quanking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout itemJLayout = new javax.swing.GroupLayout(itemJ);
+        itemJ.setLayout(itemJLayout);
+        itemJLayout.setHorizontalGroup(
+            itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(itemJLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(itemJLayout.createSequentialGroup()
+                        .addComponent(item_imgpth0, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(item_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(itemJLayout.createSequentialGroup()
+                        .addComponent(item_imgpth4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(item_imgpth7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(item_details2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemJLayout.createSequentialGroup()
+.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                 .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemJLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(580, 580, 580))
+        );
+itemJLayout.setVerticalGroup(
+    itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(itemJLayout.createSequentialGroup()
+        .addGap(30, 30, 30)
+        .addGroup(itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel3)
+            .addComponent(jLabel6))
+        .addGap(20, 20, 20)
+                .addGroup(itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_imgpth0, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(item_details, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                                    .addComponent(jLabel6)
+                    .addComponent(jLabel3)
+                .addGroup(itemJLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(item_imgpth4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(item_imgpth7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(item_details2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        bottom.add(itemJ);
+        hero.setLayout(new java.awt.BorderLayout());
+                hero.add(top, java.awt.BorderLayout.PAGE_START);  // Add this line
+        hero.add(hero_vid, java.awt.BorderLayout.NORTH);
+        hero.add(bottom, java.awt.BorderLayout.CENTER);
+
+        scrollPane1.add(hero);
+
+        add(scrollPane1, java.awt.BorderLayout.CENTER);
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Checkout button action
         ArrayList<Item> selectedItems = getSelectedItems();
-        
         if (selectedItems.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "Please select at least one item to checkout.",
-                "No Items Selected",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Calculate total for confirmation
-        int total = 0;
-        for (Item item : selectedItems) {
-            total += item.getPrice() * item.getQuantity();
-        }
-        
-        // Show confirmation dialog
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "You have selected " + selectedItems.size() + " item(s).\n" +
-            "Total: ₱" + total + "\n\n" +
-            "Proceed to checkout?",
-            "Confirm Checkout",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE);
-        
-        if (confirm == JOptionPane.YES_OPTION) {
-            // Pass selected items to checkout page
-            mainFrame.setCheckoutItems(selectedItems);
-            mainFrame.showPage("Checkout");
+            JOptionPane.showMessageDialog(this, "Please select at least one item to checkout.", "No Items Selected", JOptionPane.WARNING_MESSAGE);
+        } else {
+            mainFrame.showCheckoutPage(selectedItems);
+            resetSpinners();
         }
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Coming soon button
+        // Coming soon button action
+        JOptionPane.showMessageDialog(this, "This collection will be available on 12.15.2025!", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     // Variables declaration - do not modify
     private javax.swing.JPanel bottom;
