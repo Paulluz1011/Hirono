@@ -13,6 +13,11 @@ public class LoginPage extends javax.swing.JPanel {
         initComponents();
         this.mainFrame = mainFrame;
         
+        // Enable double buffering to prevent flickering
+        setDoubleBuffered(true);
+        jleft.setDoubleBuffered(true);
+        jright.setDoubleBuffered(true);
+        
         // Add Enter key support for password field
         pas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -96,6 +101,8 @@ public class LoginPage extends javax.swing.JPanel {
         jleft = new javax.swing.JPanel();
         pos = new javax.swing.JLabel();
         jright = new javax.swing.JPanel();
+        jrightContent = new javax.swing.JPanel();
+        jrightScroll = new javax.swing.JScrollPane();
         log = new javax.swing.JButton();
         pas = new javax.swing.JPasswordField();
         use = new javax.swing.JTextField();
@@ -104,15 +111,24 @@ public class LoginPage extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
+        // Enable double buffering and set opaque
+        setDoubleBuffered(true);
+        setOpaque(true);
+        
+        jleft.setBackground(new java.awt.Color(245, 245, 245));
         jleft.setPreferredSize(new java.awt.Dimension(580, 700));
+        jleft.setDoubleBuffered(true);
+        jleft.setOpaque(true);
 
-        pos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/poster.png"))); // NOI18N
+        pos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/poster.png")));
+        pos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pos.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jleftLayout = new javax.swing.GroupLayout(jleft);
         jleft.setLayout(jleftLayout);
         jleftLayout.setHorizontalGroup(
             jleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pos, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
         jleftLayout.setVerticalGroup(
             jleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,15 +136,29 @@ public class LoginPage extends javax.swing.JPanel {
         );
 
         jright.setBackground(new java.awt.Color(255, 255, 255));
-        jright.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         jright.setPreferredSize(new java.awt.Dimension(820, 700));
+        jright.setDoubleBuffered(true);
+        jright.setOpaque(true);
+        
+        // Create content panel for scrolling
+        jrightContent = new javax.swing.JPanel();
+        jrightContent.setBackground(new java.awt.Color(255, 255, 255));
+        jrightContent.setDoubleBuffered(true);
+        jrightContent.setOpaque(true);
+        
+        // Create scroll pane
+        jrightScroll = new javax.swing.JScrollPane();
+        jrightScroll.setBorder(null);
+        jrightScroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jrightScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jrightScroll.getVerticalScrollBar().setUnitIncrement(16);
 
         log.setBackground(new java.awt.Color(255, 102, 51));
-        log.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        log.setFont(new java.awt.Font("Helvetica Neue", 1, 24));
+        log.setForeground(new java.awt.Color(255, 255, 255));
         log.setText("Log In");
-        log.setMaximumSize(new java.awt.Dimension(400, 55));
-        log.setMinimumSize(new java.awt.Dimension(400, 55));
-
+        log.setFocusPainted(false);
+        log.setBorderPainted(false);
         log.setPreferredSize(new java.awt.Dimension(400, 55));
         log.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,80 +166,92 @@ public class LoginPage extends javax.swing.JPanel {
             }
         });
 
-        pas.setFont(new java.awt.Font("DecoType Naskh", 1, 18)); // NOI18N
+        pas.setFont(new java.awt.Font("DecoType Naskh", 1, 18));
         pas.setPreferredSize(new java.awt.Dimension(500, 55));
+        pas.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         pas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pasActionPerformed(evt);
             }
         });
 
-        use.setFont(new java.awt.Font("DecoType Naskh", 1, 18)); // NOI18N
+        use.setFont(new java.awt.Font("DecoType Naskh", 1, 18));
         use.setPreferredSize(new java.awt.Dimension(500, 55));
+        use.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         use.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 useActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("PT Mono", 1, 40)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("PT Mono", 1, 40));
         jLabel1.setText("LOG IN PAGE");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel2.setFont(new java.awt.Font("Helvetica", 1, 30)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Helvetica", 1, 24));
         jLabel2.setText("Username");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica", 1, 30)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica", 1, 24));
         jLabel3.setText("Password");
 
-        jLabel4.setFont(new java.awt.Font("PT Mono", 1, 48)); // NOI18N
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/hironologo.png"))); // NOI18N
-        jLabel4.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        jLabel4.setMinimumSize(new java.awt.Dimension(103, 172));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/hironologo.png")));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jrightContentLayout = new javax.swing.GroupLayout(jrightContent);
+        jrightContent.setLayout(jrightContentLayout);
+        jrightContentLayout.setHorizontalGroup(
+            jrightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+            .addGroup(jrightContentLayout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addGroup(jrightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(use, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(pas, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                    .addComponent(log, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(160, 160, 160))
+        );
+        jrightContentLayout.setVerticalGroup(
+            jrightContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jrightContentLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel2)
+                .addGap(10, 10, 10)
+                .addComponent(use, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3)
+                .addGap(10, 10, 10)
+                .addComponent(pas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(log, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+        
+        // Add content panel to scroll pane
+        jrightScroll.setViewportView(jrightContent);
 
         javax.swing.GroupLayout jrightLayout = new javax.swing.GroupLayout(jright);
         jright.setLayout(jrightLayout);
         jrightLayout.setHorizontalGroup(
             jrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jrightLayout.createSequentialGroup()
-                .addGroup(jrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jrightLayout.createSequentialGroup()
-                        .addGap(316, 316, 316)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jrightLayout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addGroup(jrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(pas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(use, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2)))
-                    .addGroup(jrightLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(log, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(159, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jrightLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(256, 256, 256))
+            .addComponent(jrightScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
         );
         jrightLayout.setVerticalGroup(
             jrightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jrightLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(use, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(log, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jrightScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -219,12 +261,13 @@ public class LoginPage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jleft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jright, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jright, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jleft, javax.swing.GroupLayout.PREFERRED_SIZE, 749, Short.MAX_VALUE)
-            .addComponent(jright, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
+            .addComponent(jleft, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jright, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
     }
 
@@ -235,6 +278,8 @@ public class LoginPage extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jleft;
     private javax.swing.JPanel jright;
+    private javax.swing.JPanel jrightContent;
+    private javax.swing.JScrollPane jrightScroll;
     private javax.swing.JButton log;
     private javax.swing.JPasswordField pas;
     private javax.swing.JLabel pos;

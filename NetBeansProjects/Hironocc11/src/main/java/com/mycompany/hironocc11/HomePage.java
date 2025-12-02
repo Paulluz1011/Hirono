@@ -1,5 +1,4 @@
 package com.mycompany.hironocc11;
-
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -242,7 +241,7 @@ public class HomePage extends JPanel {
         bottom.setPreferredSize(new java.awt.Dimension(1440, 1200));
 
         itemJ.setBackground(new java.awt.Color(255, 255, 204));
-        itemJ.setPreferredSize(new java.awt.Dimension(1440, 1110));
+        itemJ.setPreferredSize(new java.awt.Dimension(1440, 1500));
 
         item_imgpth0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Prince.png")));
         item_imgpth1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/hironocc11/Rose.png")));
@@ -564,16 +563,44 @@ itemJLayout.setVerticalGroup(
         add(scrollPane1, java.awt.BorderLayout.CENTER);
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Checkout button action
-        ArrayList<Item> selectedItems = getSelectedItems();
-        if (selectedItems.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select at least one item to checkout.", "No Items Selected", JOptionPane.WARNING_MESSAGE);
-        } else {
-            mainFrame.showCheckoutPage(selectedItems);
-            resetSpinners();
-        }
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    // Get selected items with quantities
+    ArrayList<Item> selectedItems = getSelectedItems();
+    
+    // Validate that at least one item is selected
+    if (selectedItems.isEmpty()) {
+        JOptionPane.showMessageDialog(
+            this, 
+            "Please select at least one item to checkout.\nUse the quantity spinners to add items to your cart.", 
+            "No Items Selected", 
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
     }
+    
+    // Calculate total items for confirmation
+    int totalItems = 0;
+    for (Item item : selectedItems) {
+        totalItems += item.getQuantity();
+    }
+    
+    // Optional: Show confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        String.format("Proceed to checkout with %d item(s)?", totalItems),
+        "Confirm Checkout",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Navigate to checkout page
+        mainFrame.showCheckoutPage(selectedItems);
+        
+        // Reset spinners after successful checkout navigation
+        resetSpinners();
+    }
+}
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // Coming soon button action
@@ -639,3 +666,4 @@ itemJLayout.setVerticalGroup(
     private javax.swing.JLabel vid;
     // End of variables declaration
 }
+

@@ -152,8 +152,27 @@ public final class MainFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify                     
     // End of variables declaration                   
-
-    void showCheckoutPage(ArrayList<Item> selectedItems) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+public void showCheckoutPage(ArrayList<Item> selectedItems) {
+    // Validate input
+    if (selectedItems == null || selectedItems.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+            "Please select at least one item to checkout.",
+            "No Items Selected",
+            JOptionPane.WARNING_MESSAGE);
+        return;
     }
+    
+    // Store the selected items
+    setCheckoutItems(selectedItems);
+    
+    // Update the checkout page with the selected items
+    if (checkoutPage != null) {
+        checkoutPage.updateCheckoutItems(selectedItems);
+    }
+    
+    // Show the checkout page
+    showPage("Checkout");
+    
+    System.out.println("Navigated to checkout with " + selectedItems.size() + " item(s)");
+}
 }
